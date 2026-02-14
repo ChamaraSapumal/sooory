@@ -1,208 +1,336 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Will You Marry Me?</title>
+    <title>Forgive Me? 🌹</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💝</text></svg>">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
+        /* --- General Reset & Layout --- */
         body {
-            background-color: #ffe6f2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             margin: 0;
-            font-family: 'Comic Sans MS', cursive;
-            overflow: hidden;
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            width: 90%;
-            max-width: 600px;
-        }
-
-        h1 {
-            color: #ff69b4;
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            margin-bottom: 30px;
-            word-wrap: break-word;
-        }
-
-        .buttons {
+            padding: 0;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background-color: #ffe6f2;
+            height: 100vh;
             display: flex;
-            gap: 20px;
             justify-content: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
+            align-items: center;
+            font-family: 'Nunito', sans-serif;
+            overflow: hidden;
+            position: relative;
         }
 
-        button {
-            padding: clamp(10px, 3vw, 15px) clamp(20px, 5vw, 30px);
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            font-family: 'Comic Sans MS', cursive;
-            touch-action: manipulation;
-        }
-
-        #yesBtn {
-            background-color: #ff69b4;
-            color: white;
-        }
-
-        #noBtn {
-            background-color: #ff99cc;
-            color: white;
-            transition: all 0.05s ease;
-        }
-
-        button:hover {
-            transform: scale(1.1);
-        }
-
-        .heart {
+        /* --- Floating Background Hearts --- */
+        .bg-heart {
             position: absolute;
-            font-size: clamp(18px, 5vw, 24px);
-            color: #ff69b4;
-            pointer-events: none;
-            animation: float 3s ease-in-out infinite;
+            color: rgba(255, 182, 193, 0.4);
+            font-size: 2rem;
+            animation: floatBackground 10s infinite linear;
+            z-index: 0;
         }
 
-        @keyframes float {
+        @keyframes floatBackground {
             0% {
-                transform: translateY(0) rotate(0deg);
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
             }
 
-            50% {
-                transform: translateY(-20px) rotate(180deg);
+            20% {
+                opacity: 1;
             }
 
             100% {
-                transform: translateY(0) rotate(360deg);
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
             }
         }
 
-        @media (max-width: 480px) {
-            .buttons {
-                gap: 15px;
+        /* --- Main Card Container --- */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            max-width: 90%;
+            width: 500px;
+            z-index: 10;
+            transition: transform 0.3s ease;
+            border: 2px solid #fff;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d63384;
+            font-size: 3.5rem;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        /* --- Image Area --- */
+        .emoji-area {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
             }
 
-            body {
-                padding: 10px;
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* --- Button Container --- */
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 80px;
+            /* Keeps layout stable as buttons resize */
+        }
+
+        button {
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Nunito', sans-serif;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #yesBtn {
+            background-color: #ff4757;
+            color: white;
+            z-index: 2;
+        }
+
+        #yesBtn:hover {
+            background-color: #ff6b81;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+        }
+
+        #noBtn {
+            background-color: #f1f2f6;
+            color: #2f3542;
+        }
+
+        #noBtn:hover {
+            background-color: #dfe4ea;
+        }
+
+        /* --- Success Screen --- */
+        #success-message {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Flying Hearts (JS Triggered) --- */
+        .flying-heart {
+            position: fixed;
+            font-size: 2rem;
+            animation: flyUp 4s ease-out forwards;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes flyUp {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Will You Marry Me? 💝</h1>
-        <div class="buttons">
-            <button id="yesBtn">Yes 💖</button>
-            <button id="noBtn">No 💔</button>
+
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="bg-hearts-container"></div>
+
+    <div class="card">
+        <div id="question-screen">
+            <div class="emoji-area">🥺👉👈</div>
+            <h1 id="mainTitle">I messed up...</h1>
+            <p id="subTitle">I know I'm stubborn, but I love you furiously.<br>Will you forgive me and be my Valentine?
+            </p>
+
+            <div class="btn-container">
+                <button id="yesBtn">Yes, I forgive you 💖</button>
+                <button id="noBtn">No 😤</button>
+            </div>
+        </div>
+
+        <div id="success-message">
+            <div class="emoji-area">😭❤️🌹</div>
+            <h1>I Knew It!</h1>
+            <p>I promise to make it up to you.<br>Get ready for the best date ever.</p>
+            <p style="font-size: 0.9rem; color: #aaa;">(I'm never letting you go.)</p>
         </div>
     </div>
 
     <script>
-        const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
-        const container = document.querySelector('.container');
-        let lastTime = 0;
+        const noBtn = document.getElementById('noBtn');
+        const questionScreen = document.getElementById('question-screen');
+        const successMessage = document.getElementById('success-message');
+        const mainTitle = document.getElementById('mainTitle');
+        const emojiArea = document.querySelector('.emoji-area');
 
-        // Function to get random position away from mouse/touch
-        function getRandomPosition(mouseX, mouseY) {
-            const padding = Math.min(50, window.innerWidth * 0.1); // Responsive padding
-            const maxAttempts = 10;
-            const minDistance = Math.min(200, window.innerWidth * 0.3); // Responsive distance
+        // Stages of stubbornness (The text changes as she clicks No)
+        const noTexts = [
+            "Are you sure?",
+            "Really sure?",
+            "Think about the chocolate! 🍫",
+            "Please? 🥺",
+            "I'll do the dishes!",
+            "Don't break my heart 💔",
+            "Okay, now you're just being mean",
+            "I'm not gonna let you click No"
+        ];
 
-            for (let i = 0; i < maxAttempts; i++) {
-                const x = padding + Math.random() * (window.innerWidth - 2 * padding);
-                const y = padding + Math.random() * (window.innerHeight - 2 * padding);
+        let clickCount = 0;
+        let yesScale = 1;
+        const audio = document.getElementById("bg-music");
+        audio.volume = 0.4; // Set a soft, romantic volume
 
-                const distance = Math.sqrt(
-                    Math.pow(x - mouseX, 2) +
-                    Math.pow(y - mouseY, 2)
-                );
-
-                if (distance > minDistance) {
-                    return { x, y };
-                }
-            }
-
-            // If no good position found, force opposite side
-            return {
-                x: mouseX < window.innerWidth / 2 ? window.innerWidth - padding : padding,
-                y: mouseY < window.innerHeight / 2 ? window.innerHeight - padding : padding
-            };
-        }
-
-        // Handle both mouse and touch events
-        ['mousemove', 'touchmove'].forEach(eventType => {
-            document.addEventListener(eventType, (e) => {
-                const currentTime = Date.now();
-                if (currentTime - lastTime < 100) return; // Limit update rate
-                lastTime = currentTime;
-
-                const noBtnRect = noBtn.getBoundingClientRect();
-                const mouseX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-                const mouseY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
-
-                const distance = Math.sqrt(
-                    Math.pow(mouseX - (noBtnRect.left + noBtnRect.width / 2), 2) +
-                    Math.pow(mouseY - (noBtnRect.top + noBtnRect.height / 2), 2)
-                );
-
-                if (distance < Math.min(150, window.innerWidth * 0.25)) {
-                    noBtn.style.position = 'fixed';
-                    const newPos = getRandomPosition(mouseX, mouseY);
-                    noBtn.style.left = newPos.x + 'px';
-                    noBtn.style.top = newPos.y + 'px';
-                }
+        // This function handles the "Autoplay" restriction
+        const playMusic = () => {
+            audio.play().then(() => {
+                // Once playing, remove the listeners so they don't trigger again
+                document.removeEventListener('click', playMusic);
+                document.removeEventListener('touchstart', playMusic);
+            }).catch(error => {
+                console.log("Waiting for interaction to play music...");
             });
-        });
+        };
 
-        // Create floating hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '💖';
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.top = window.innerHeight + 'px';
-            document.body.appendChild(heart);
+        // Browsers require a click/tap to start audio
+        document.addEventListener('click', playMusic);
+        document.addEventListener('touchstart', playMusic);
 
-            setTimeout(() => {
-                heart.remove();
-            }, 3000);
+        // Also trigger play when she clicks the "Yes" or "No" buttons specifically
+        document.getElementById('yesBtn').addEventListener('click', playMusic);
+        document.getElementById('noBtn').addEventListener('click', playMusic);
+
+        // Populate background hearts
+        function createBgHearts() {
+            const container = document.getElementById('bg-hearts-container');
+            const hearts = ['💖', '🌹', '✨', '💕'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('bg-heart');
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                container.appendChild(heart);
+
+                // Cleanup
+                setTimeout(() => { heart.remove(); }, 10000);
+            }, 500);
         }
+        createBgHearts();
 
-        // Yes button click handler
-        yesBtn.addEventListener('click', () => {
-            document.body.style.backgroundColor = '#ffb6c1';
-            container.innerHTML = '<h1>Yaaay! I knew u love me 💝</h1>';
+        // Interaction Logic
+        noBtn.addEventListener('click', () => {
+            clickCount++;
 
-            // Create hearts
-            for (let i = 0; i < 20; i++) {
-                setTimeout(createHeart, i * 150);
+            // 1. Change the "No" button text
+            if (clickCount < noTexts.length) {
+                noBtn.innerText = noTexts[clickCount];
+            } else {
+                // After running out of text, the button becomes elusive (The "Run Away" phase)
+                moveNoButton();
+                noBtn.innerText = "Can't catch me! 👻";
+                noBtn.style.position = "absolute";
             }
 
-            // Show final messages after 5 seconds
-            setTimeout(() => {
-                container.innerHTML = `
-                    <h1>But I can\'t marry u because</h1>
-                `;
-                setTimeout(() => {
-                    container.innerHTML += `
-                        <h1>මම තාම අම්මගෙන් ඉල්ලගෙන phone එකට reload එකක් දාගන්නේ 😅</h1>`;
-                }, 1500);
-            }, 5000);
+            // 2. Make the "Yes" button GROW bigger (Visual Guilt Trip)
+            yesScale += 0.15;
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // 3. Change the Main Title to match the desperation
+            if (clickCount === 2) mainTitle.innerText = "Baby, please...";
+            if (clickCount === 4) mainTitle.innerText = "I'm begging here!";
+            if (clickCount === 6) emojiArea.innerText = "😭💔";
         });
+
+        // The "Run Away" logic (activates after several clicks or on hover in late stage)
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        // Add mouseover/touch event only after the user has been "stubborn" enough
+        noBtn.addEventListener('mouseover', () => {
+            if (clickCount >= 5) { // Only starts running away after 5 refusals
+                moveNoButton();
+                noBtn.style.position = "fixed"; // Break out of the container
+            }
+        });
+
+        // The Acceptance Logic
+        yesBtn.addEventListener('click', () => {
+            questionScreen.classList.add('hidden');
+            successMessage.style.display = 'flex';
+            document.body.style.backgroundColor = '#ffc1e3';
+
+            // Explosion of hearts
+            setInterval(createFlyingHeart, 100);
+        });
+
+        function createFlyingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('flying-heart');
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+
     </script>
 </body>
 
